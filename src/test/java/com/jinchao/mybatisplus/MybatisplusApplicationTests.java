@@ -2,8 +2,10 @@ package com.jinchao.mybatisplus;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.additional.query.impl.LambdaQueryChainWrapper;
 import com.jinchao.mybatisplus.dao.UserMapper;
 import com.jinchao.mybatisplus.entity.User;
@@ -318,6 +320,36 @@ public class MybatisplusApplicationTests {
     public void selectByWrapperLambda2(){
         List<User> userList = new LambdaQueryChainWrapper<User>(userMapper).like(User::getName, "向")
                     .ge(User::getAge, 40).list();
+        userList.forEach(System.out::println);
+    }
+
+    /*
+      分页
+     */
+    @Test
+    public void selectPage(){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
+        queryWrapper.ge("age",19);
+        Page<User> page = new Page<User>(1,2,false);
+        IPage<User> iPage = userMapper.selectPage(page, queryWrapper);
+        System.out.println("总页数:"+iPage.getPages());
+        System.out.println("总记录数:"+iPage.getTotal());
+        List<User> userList = iPage.getRecords();
+        userList.forEach(System.out::println);
+    }
+
+    /*
+      分页
+     */
+    @Test
+    public void selectMapsPage(){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
+        queryWrapper.ge("age",19);
+        Page<User> page = new Page<User>(1,2);
+        IPage<Map<String, Object>> iPage = userMapper.selectMapsPage(page, queryWrapper);
+        System.out.println("总页数:"+iPage.getPages());
+        System.out.println("总记录数:"+iPage.getTotal());
+        List<Map<String, Object>> userList = iPage.getRecords();
         userList.forEach(System.out::println);
     }
 
