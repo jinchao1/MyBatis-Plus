@@ -3,7 +3,9 @@ package com.jinchao.mybatisplus.entity;
 import com.baomidou.mybatisplus.annotation.SqlCondition;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,7 +18,10 @@ import java.time.LocalDateTime;
  */
 @Data
 @TableName("mp_user")
-public class User {
+@EqualsAndHashCode(callSuper = false)
+public class User extends Model<User> {
+
+
     //主键
     private Long id;
     //姓名

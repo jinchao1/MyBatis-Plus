@@ -1,6 +1,10 @@
 package com.jinchao.mybatisplus;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.service.additional.update.impl.LambdaUpdateChainWrapper;
 import com.jinchao.mybatisplus.dao.UserMapper;
 import com.jinchao.mybatisplus.entity.User;
 import org.junit.Test;
@@ -44,5 +48,41 @@ public class UpdateTest {
         user.setEmail("suner2@qq.com");
         int update = userMapper.update(user, userUpdateWrapper);
         System.out.println("影响记录数："+update);
+    }
+
+    @Test
+    public void updateByWraper1(){
+        User whereUser = new User();
+        whereUser.setName("孙二");
+        UpdateWrapper<User> userUpdateWrapper = new UpdateWrapper<User>(whereUser);
+        userUpdateWrapper.eq("real_name","孙二").eq("age",19);
+        User user = new User();
+        user.setId(0002L);
+        user.setAge(27);
+        user.setEmail("suner2@qq.com");
+        int update = userMapper.update(user, userUpdateWrapper);
+        System.out.println("影响记录数："+update);
+    }
+
+    @Test
+    public void updateByWraper2(){
+        UpdateWrapper<User> userUpdateWrapper = new UpdateWrapper<User>();
+        userUpdateWrapper.eq("real_name","孙二").eq("age",27).set("age",20);
+        int update = userMapper.update(null, userUpdateWrapper);
+        System.out.println("影响记录数："+update);
+    }
+
+    @Test
+    public void updateByWraperLambda(){
+        LambdaUpdateWrapper<User> updateWrapper = Wrappers.<User>lambdaUpdate();
+        updateWrapper.eq(User::getName,"王一").eq(User::getAge,20).set(User::getAge,28);
+        int update = userMapper.update(null, updateWrapper);
+        System.out.println("影响记录数："+update);
+    }
+
+    @Test
+    public void updateByWraperLambdaChain(){
+        boolean update = new LambdaUpdateChainWrapper<User>(userMapper).eq(User::getName, "王一").eq(User::getAge, 28).set(User::getAge, 29).update();
+        System.out.println(update);
     }
 }
