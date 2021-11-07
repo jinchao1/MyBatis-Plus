@@ -37,8 +37,8 @@ public class MybatisplusApplicationTests {
     @Test
     public void insert(){
         User user = new User();
-        user.setName("向东");
-        user.setAge(35);
+        user.setName("陈伟霆");
+        user.setAge(32);
         user.setManagerId(2L);
         user.setCreateTime(LocalDateTime.now());
         user.setRemark("这是一个备注信息哦！");

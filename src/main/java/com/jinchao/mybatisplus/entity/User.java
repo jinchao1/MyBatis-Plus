@@ -1,8 +1,6 @@
 package com.jinchao.mybatisplus.entity;
 
-import com.baomidou.mybatisplus.annotation.SqlCondition;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,6 +21,8 @@ public class User extends Model<User> {
 
 
     //主键
+//    @TableId(type = IdType.AUTO)//自增
+    @TableId(type = IdType.NONE)//默认策略，不配和配都是它（跟随全局）
     private Long id;
     //姓名
     @TableField(value = "real_name",condition = SqlCondition.LIKE)

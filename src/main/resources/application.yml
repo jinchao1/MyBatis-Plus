@@ -12,4 +12,11 @@ logging:
     com.jinchao.mybatisplus.dao: trace
   pattern:
     console: '%p%m%n'
+mybatis-plus:
+  mapper-locations:
+  - com/mp/mapper/*
+  global-config:
+    db-config:
+      id-type: uuid
+  config-location: classpath:mybatis-config.xml
 
