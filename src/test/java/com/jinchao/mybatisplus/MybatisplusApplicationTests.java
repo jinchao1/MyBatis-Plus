@@ -204,8 +204,8 @@ public class MybatisplusApplicationTests {
         if(StringUtils.isNotEmpty(email)){
             queryWrapper.like("email",email);
         }*/
-        queryWrapper.like(StringUtils.isNotEmpty(name),"real_name",name).
-                like(StringUtils.isNotEmpty(email),"email",email);
+        queryWrapper.like(StringUtils.isNotBlank(name),"real_name",name).
+                like(StringUtils.isNotBlank(email),"email",email);
         List<User> userList = userMapper.selectList(queryWrapper);
         userList.forEach(System.out::println);
     }
@@ -343,14 +343,14 @@ public class MybatisplusApplicationTests {
      */
     @Test
     public void selectMapsPage(){
-        QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
+        /*QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
         queryWrapper.ge("age",19);
         Page<User> page = new Page<User>(1,2);
         IPage<Map<String, Object>> iPage = userMapper.selectMapsPage(page, queryWrapper);
         System.out.println("总页数:"+iPage.getPages());
         System.out.println("总记录数:"+iPage.getTotal());
         List<Map<String, Object>> userList = iPage.getRecords();
-        userList.forEach(System.out::println);
+        userList.forEach(System.out::println);*/
     }
 
 }
